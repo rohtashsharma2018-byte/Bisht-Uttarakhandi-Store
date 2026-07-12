@@ -28,7 +28,8 @@ import {
   MapPin,
   Mail,
   ExternalLink,
-  Heart
+  Heart,
+  Menu
 } from "lucide-react";
 import { Laptop } from "../types";
 import { motion, AnimatePresence } from "motion/react";
@@ -94,6 +95,7 @@ export const Login: React.FC = () => {
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [helphoneNumber, setHelphoneNumber] = useState("+91 87506 00385");
   const [activePolicy, setActivePolicy] = useState<"privacy" | "refund" | "terms" | null>(null);
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
 
   useEffect(() => {
     if (showHelplineModal) {
@@ -273,12 +275,60 @@ export const Login: React.FC = () => {
             <Button 
               size="sm" 
               onClick={() => { setShowAuthModal(true); }}
-              className="text-xs font-bold py-2 px-4 bg-amber-600 hover:bg-amber-700 text-white h-9 uppercase tracking-wider shadow-sm rounded-lg"
+              className="hidden md:flex text-xs font-bold py-2 px-4 bg-amber-600 hover:bg-amber-700 text-white h-9 uppercase tracking-wider shadow-sm rounded-lg"
             >
               Admin Login
             </Button>
+            <button 
+              className="md:hidden text-slate-600 hover:text-slate-900 transition-colors p-2"
+              onClick={() => setShowMobileMenu(!showMobileMenu)}
+            >
+              {showMobileMenu ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
           </div>
         </div>
+
+        {/* Mobile Menu */}
+        <AnimatePresence>
+          {showMobileMenu && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              className="md:hidden overflow-hidden bg-white/95 backdrop-blur-md border-t border-slate-100"
+            >
+              <nav className="flex flex-col py-4 px-2 space-y-2">
+                <button 
+                  onClick={() => { scrollTo(aboutRef); setShowMobileMenu(false); }} 
+                  className="px-4 py-3 text-sm font-semibold text-slate-700 hover:text-amber-600 hover:bg-amber-50 rounded-lg text-left transition-colors"
+                >
+                  About Us
+                </button>
+                <button 
+                  onClick={() => { scrollTo(catalogRef); setShowMobileMenu(false); }} 
+                  className="px-4 py-3 text-sm font-semibold text-slate-700 hover:text-amber-600 hover:bg-amber-50 rounded-lg text-left transition-colors"
+                >
+                  Decor Collection
+                </button>
+                <button 
+                  onClick={() => { scrollTo(contactRef); setShowMobileMenu(false); }} 
+                  className="px-4 py-3 text-sm font-semibold text-slate-700 hover:text-amber-600 hover:bg-amber-50 rounded-lg text-left transition-colors"
+                >
+                  Contact Us
+                </button>
+                <div className="px-4 pt-2 pb-1 border-t border-slate-100 mt-2">
+                  <Button 
+                    size="sm" 
+                    onClick={() => { setShowAuthModal(true); setShowMobileMenu(false); }}
+                    className="w-full text-xs font-bold py-2.5 bg-amber-600 hover:bg-amber-700 text-white h-auto uppercase tracking-wider shadow-sm rounded-lg"
+                  >
+                    Admin Login
+                  </Button>
+                </div>
+              </nav>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </header>
 
       {/* Hero Centered Section */}
