@@ -1,0 +1,8 @@
+{
+  "name": "Bisht Uttarakhandi Store",
+  "description": "An exquisite home decoration and handcrafted items platform, offering festive garlands, custom resin keychains, and boho decor for purchase and rental.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
