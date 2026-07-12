@@ -29,7 +29,9 @@ import {
   Mail,
   ExternalLink,
   Heart,
-  Menu
+  Menu,
+  ChevronLeft,
+  ChevronRight
 } from "lucide-react";
 import { Laptop } from "../types";
 import { motion, AnimatePresence } from "motion/react";
@@ -87,6 +89,164 @@ export const StoreLogo: React.FC<{ className?: string; dark?: boolean; compact?:
   );
 };
 
+const ProductImageSlider: React.FC<{ laptop: Laptop }> = ({ laptop }) => {
+  const images = laptop.image_urls && laptop.image_urls.length > 0 
+    ? laptop.image_urls 
+    : [laptop.image_url].filter(Boolean) as string[];
+  
+  if (images.length === 0) images.push("https://images.unsplash.com/photo-1605721911519-3dfeb3be25e7?auto=format&fit=crop&w=400&q=80");
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [showGallery, setShowGallery] = useState(false);
+
+  useEffect(() => {
+    if (!showGallery) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "ArrowRight") setCurrentIndex((prev) => (prev + 1) % images.length);
+      if (e.key === "ArrowLeft") setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
+      if (e.key === "Escape") setShowGallery(false);
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [showGallery, images.length]);
+
+  const handleNext = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setCurrentIndex((prev) => (prev + 1) % images.length);
+  };
+
+  const handlePrev = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
+  };
+
+  return (
+    <>
+      <div className="relative w-full h-full group/slider overflow-hidden">
+        <AnimatePresence mode="wait">
+          <motion.img
+            key={currentIndex}
+            src={images[currentIndex]}
+            alt={`${laptop.name} - ${currentIndex + 1}`}
+            initial={{ opacity: 0, scale: 1.1 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
+            className="object-cover w-full h-full cursor-zoom-in"
+            referrerPolicy="no-referrer"
+            onClick={(e) => {
+              e.stopPropagation();
+              setShowGallery(true);
+            }}
+            onError={(e)=>{
+              (e.target as any).src = "https://images.unsplash.com/photo-1605721911519-3dfeb3be25e7?auto=format&fit=crop&w=400&q=80";
+            }}
+          />
+        </AnimatePresence>
+
+        {images.length > 1 && (
+          <>
+            <button 
+              onClick={handlePrev}
+              className="absolute left-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/90 text-slate-800 shadow-lg opacity-0 group-hover/slider:opacity-100 transition-all hover:bg-amber-500 hover:text-white z-10"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+
+            <button 
+              onClick={handleNext}
+              className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/90 text-slate-800 shadow-lg opacity-0 group-hover/slider:opacity-100 transition-all hover:bg-amber-500 hover:text-white z-10"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
+
+            <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-10 bg-black/20 backdrop-blur-md px-2 py-1 rounded-full">
+              {images.map((_, idx) => (
+                <div 
+                  key={idx}
+                  className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${idx === currentIndex ? "bg-amber-500 w-3" : "bg-white/60"}`}
+                />
+              ))}
+            </div>
+          </>
+        )}
+      </div>
+
+      {/* Fullscreen Gallery Modal */}
+      <AnimatePresence>
+        {showGallery && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] bg-slate-900/98 backdrop-blur-xl flex flex-col p-4 md:p-6"
+          >
+            <div className="flex justify-between items-center mb-4 md:mb-6">
+              <div>
+                <h3 className="text-white font-bold text-lg md:text-xl">{laptop.name}</h3>
+                <p className="text-slate-400 text-xs md:text-sm">{laptop.category} • {currentIndex + 1} / {images.length}</p>
+              </div>
+              <button 
+                onClick={() => setShowGallery(false)}
+                className="p-3 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+
+            <div className="flex-1 flex items-center justify-center relative overflow-hidden">
+              <AnimatePresence mode="wait">
+                <motion.img 
+                  key={currentIndex}
+                  src={images[currentIndex]} 
+                  alt={laptop.name}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ duration: 0.3 }}
+                  className="max-h-[65vh] md:max-h-[70vh] max-w-full object-contain rounded-xl shadow-2xl shadow-black/50"
+                  referrerPolicy="no-referrer"
+                />
+              </AnimatePresence>
+              
+              {images.length > 1 && (
+                <>
+                  <button 
+                    onClick={handlePrev} 
+                    className="absolute left-0 md:left-4 p-3 md:p-4 rounded-full bg-white/5 text-white hover:bg-white/10 transition-all active:scale-95"
+                  >
+                    <ChevronLeft className="w-6 h-6 md:w-8 h-8" />
+                  </button>
+                  <button 
+                    onClick={handleNext} 
+                    className="absolute right-0 md:right-4 p-3 md:p-4 rounded-full bg-white/5 text-white hover:bg-white/10 transition-all active:scale-95"
+                  >
+                    <ChevronRight className="w-6 h-6 md:w-8 h-8" />
+                  </button>
+                </>
+              )}
+            </div>
+
+            <div className="mt-6 md:mt-8 flex justify-start md:justify-center gap-3 overflow-x-auto pb-4 scrollbar-hide px-4">
+              {images.map((img, idx) => (
+                <button 
+                  key={idx}
+                  onClick={() => setCurrentIndex(idx)}
+                  className={`relative flex-shrink-0 w-16 h-16 md:w-20 md:h-20 rounded-lg overflow-hidden border-2 transition-all duration-300 ${idx === currentIndex ? "border-amber-500 scale-110 shadow-lg shadow-amber-500/40" : "border-transparent opacity-40 hover:opacity-100"}`}
+                >
+                  <img src={img} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                </button>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  );
+};
+
 export const Login: React.FC = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<"signin" | "signup">("signin");
@@ -129,7 +289,7 @@ export const Login: React.FC = () => {
       try {
         const { data, error } = await supabase
           .from("products")
-          .select("id, name, description, category, sell_price, stock, image_url, created_at, product_code")
+          .select("id, name, description, category, sell_price, stock, image_url, image_urls, created_at, product_code")
           .order("created_at", { ascending: false });
         if (error) throw error;
         if (data) {
@@ -239,7 +399,7 @@ export const Login: React.FC = () => {
   // Filter items
   const filteredInventory = displayInventory.filter((laptop) => {
     const matchesCategory = selectedCategory === "All" || laptop.category === selectedCategory;
-    const matchesPrice = true;
+    const matchesPrice = laptop.sell_price <= maxPriceFilter;
     const matchesSearch = !searchQuery || 
       laptop.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       (laptop.description && laptop.description.toLowerCase().includes(searchQuery.toLowerCase()));
@@ -662,16 +822,7 @@ export const Login: React.FC = () => {
 
                   {/* Laptop image block */}
                   <div className="h-48 bg-slate-100 relative overflow-hidden flex items-center justify-center">
-                    <img 
-                      src={laptop.image_url || "https://images.unsplash.com/photo-1605721911519-3dfeb3be25e7?auto=format&fit=crop&w=400&q=80"} 
-                      alt={laptop.name} 
-                      onError={(e)=>{
-                        // fallback image
-                        (e.target as any).src = "https://images.unsplash.com/photo-1605721911519-3dfeb3be25e7?auto=format&fit=crop&w=400&q=80";
-                      }}
-                      className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500"
-                      referrerPolicy="no-referrer"
-                    />
+                    <ProductImageSlider laptop={laptop} />
                   </div>
 
                   {/* Listing details */}
