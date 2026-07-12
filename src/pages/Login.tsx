@@ -32,6 +32,8 @@ import {
 } from "lucide-react";
 import { Laptop } from "../types";
 import { motion, AnimatePresence } from "motion/react";
+import heroBgImage from "../assets/images/uttarakhand_hero_bg_1783837603399.jpg";
+import culturalHeritageImage from "../assets/images/uttarakhand_cultural_heritage_1783837429784.jpg";
 
 // Dynamic SVG representation matching Bisht Uttarakhandi Store's official logo
 export const StoreLogo: React.FC<{ className?: string; dark?: boolean; compact?: boolean }> = ({ 
@@ -286,7 +288,7 @@ export const Login: React.FC = () => {
         <div 
           className="absolute inset-0 z-0"
           style={{
-            backgroundImage: "url('/src/assets/images/uttarakhand_hero_bg_1783837603399.jpg')",
+            backgroundImage: `url(${heroBgImage})`,
             backgroundSize: "cover",
             backgroundPosition: "center"
           }}
@@ -723,7 +725,7 @@ export const Login: React.FC = () => {
           <div className="lg:w-1/2 relative group">
             <div className="absolute -inset-4 bg-amber-100/50 rounded-[2rem] blur-2xl group-hover:bg-amber-200/50 transition-colors duration-500"></div>
             <img 
-              src="/src/assets/images/uttarakhand_cultural_heritage_1783837429784.jpg" 
+              src={culturalHeritageImage} 
               alt="Uttarakhand Cultural Heritage" 
               className="relative rounded-3xl shadow-2xl border border-slate-200 object-cover aspect-[4/3] w-full"
             />
