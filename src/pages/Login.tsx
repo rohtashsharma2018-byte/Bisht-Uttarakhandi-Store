@@ -35,6 +35,7 @@ import { Laptop } from "../types";
 import { motion, AnimatePresence } from "motion/react";
 import heroBgImage from "../assets/images/uttarakhand_hero_bg_1783837603399.jpg";
 import culturalHeritageImage from "../assets/images/uttarakhand_cultural_heritage_1783837429784.jpg";
+import { SplashScreen } from "../components/SplashScreen";
 
 // Dynamic SVG representation matching Bisht Uttarakhandi Store's official logo
 export const StoreLogo: React.FC<{ className?: string; dark?: boolean; compact?: boolean }> = ({ 
@@ -96,6 +97,7 @@ export const Login: React.FC = () => {
   const [helphoneNumber, setHelphoneNumber] = useState("+91 87506 00385");
   const [activePolicy, setActivePolicy] = useState<"privacy" | "refund" | "terms" | null>(null);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const [showSplash, setShowSplash] = useState(true);
 
   useEffect(() => {
     if (showHelplineModal) {
@@ -248,9 +250,13 @@ export const Login: React.FC = () => {
   const uniqueCategories = ["All", ...Array.from(new Set(displayInventory.map(l => l.category).filter(Boolean)))];
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col text-slate-800 font-sans selection:bg-slate-900 selection:text-white">
-      
-      {/* Dynamic Header Navbar Section */}
+    <>
+      <AnimatePresence>
+        {showSplash && <SplashScreen onComplete={() => setShowSplash(false)} />}
+      </AnimatePresence>
+      <div className="min-h-screen bg-slate-50 flex flex-col text-slate-800 font-sans selection:bg-slate-900 selection:text-white">
+        
+        {/* Dynamic Header Navbar Section */}
       <header className="sticky top-0 z-50 bg-white/85 backdrop-blur-md border-b border-slate-100 px-6 py-3 transition-all duration-200 shadow-sm">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3 cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
@@ -299,19 +305,19 @@ export const Login: React.FC = () => {
             >
               <nav className="flex flex-col py-4 px-2 space-y-2">
                 <button 
-                  onClick={() => { scrollTo(aboutRef); setShowMobileMenu(false); }} 
+                  onClick={() => { setShowMobileMenu(false); setTimeout(() => scrollTo(aboutRef), 200); }} 
                   className="px-4 py-3 text-sm font-semibold text-slate-700 hover:text-amber-600 hover:bg-amber-50 rounded-lg text-left transition-colors"
                 >
                   About Us
                 </button>
                 <button 
-                  onClick={() => { scrollTo(catalogRef); setShowMobileMenu(false); }} 
+                  onClick={() => { setShowMobileMenu(false); setTimeout(() => scrollTo(catalogRef), 200); }} 
                   className="px-4 py-3 text-sm font-semibold text-slate-700 hover:text-amber-600 hover:bg-amber-50 rounded-lg text-left transition-colors"
                 >
                   Decor Collection
                 </button>
                 <button 
-                  onClick={() => { scrollTo(contactRef); setShowMobileMenu(false); }} 
+                  onClick={() => { setShowMobileMenu(false); setTimeout(() => scrollTo(contactRef), 200); }} 
                   className="px-4 py-3 text-sm font-semibold text-slate-700 hover:text-amber-600 hover:bg-amber-50 rounded-lg text-left transition-colors"
                 >
                   Contact Us
@@ -1381,5 +1387,6 @@ export const Login: React.FC = () => {
       </AnimatePresence>
 
     </div>
+    </>
   );
 };
