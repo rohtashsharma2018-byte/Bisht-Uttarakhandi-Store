@@ -977,7 +977,7 @@ export const Login: React.FC = () => {
                   <div className="space-y-1">
                     <h4 className="font-bold text-slate-400 uppercase tracking-wider text-[9px]">Studio Location</h4>
                     <p className="text-xs text-slate-700 font-semibold leading-relaxed">
-                      Shipra Riviera society, Between Gate no.1&2 Sucheta Kriplani Marg, Gyan Khand III, Indirapuram Ghaziabad, Uttar Pradesh 201014
+                      SRC 24D, Shipra Riviera, Gyan Khand 3, Indirapuram, Ghaziabad, Uttar Pradesh 201014
                     </p>
                   </div>
                 </div>
@@ -1041,7 +1041,7 @@ export const Login: React.FC = () => {
 
             {/* Map Column */}
             <div className="lg:col-span-7 flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm h-[400px] lg:h-auto min-h-[350px] relative group">
-              {/* Active Interactive Iframe Map representing Gyan Khand III, Indirapuram, Ghaziabad */}
+              {/* Active Interactive Iframe Map representing Gyan Khand 3, Indirapuram, Ghaziabad */}
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3501.077051493774!2d77.37525387631336!3d28.634947975663558!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cf537b01d0c81%3A0xe67ca66f4e1950d9!2sShipra%20Riviera%2C%20Gyan%20Khand%20III%2C%20Indirapuram%2C%20Ghaziabad%2C%20Uttar%20Pradesh%20201014!5e0!3m2!1sen!2sin!4v1710000000000!5m2!1sen!2sin"
                 className="w-full h-full border-0 absolute inset-0"
@@ -1054,7 +1054,7 @@ export const Login: React.FC = () => {
               {/* Float badge or control layer over map to match user style */}
               <div className="absolute top-4 left-4 z-10">
                 <a
-                  href="https://maps.google.com/?q=Shipra+Riviera+society+Indirapuram+Ghaziabad"
+                  href="https://maps.google.com/?q=SRC+24D+Shipra+Riviera+Gyan+Khand+3+Indirapuram+Ghaziabad"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 bg-white/95 backdrop-blur-sm border border-slate-200 px-3.5 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider text-slate-800 shadow-sm hover:bg-white transition-colors"
@@ -1429,7 +1429,7 @@ export const Login: React.FC = () => {
                       <h4 className="text-[10px] font-black uppercase text-slate-400 tracking-wider mb-2">Statutory Grievance Redressal</h4>
                       <div className="space-y-1 text-[11px] text-slate-600">
                         <p><strong>Officer Representative:</strong> Grievance Cell, Bisht Uttarakhandi Store</p>
-                        <p><strong>Physical Address:</strong> Shipra Riviera society, Gyan Khand III, Indirapuram, Ghaziabad, UP, India 201014</p>
+                        <p><strong>Physical Address:</strong> SRC 24D, Shipra Riviera, Gyan Khand 3, Indirapuram, Ghaziabad, Uttar Pradesh 201014</p>
                         <p><strong>Helpline Contact:</strong> +91 87506 00385</p>
                         <p><strong>Email Address:</strong> compliance@bishtstore.com</p>
                       </div>
