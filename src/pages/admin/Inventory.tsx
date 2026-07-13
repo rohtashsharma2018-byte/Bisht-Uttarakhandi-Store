@@ -403,7 +403,7 @@ export default function Inventory() {
                   <input type="number" {...register("stock", { required: true })} className="w-full rounded border border-slate-300 px-3 py-1.5 text-sm" />
                 </div>
                 <div className="lg:col-span-2">
-                  <label className="block text-xs font-medium text-slate-700 mb-1">Product Images (Up to 5)</label>
+                  <label className="block text-xs font-medium text-slate-700 mb-1">Product Images (Up to 15)</label>
                   <div className="space-y-3">
                     <div className="flex flex-wrap gap-2">
                       {/* Existing Images */}
@@ -445,7 +445,7 @@ export default function Inventory() {
                       ))}
 
                       {/* Add Button */}
-                      {(existingUrls.length + selectedFiles.length) < 5 && (
+                      {(existingUrls.length + selectedFiles.length) < 15 && (
                         <div className="w-16 h-16 rounded border-2 border-dashed border-slate-200 flex items-center justify-center hover:border-blue-300 hover:bg-slate-50 transition-colors">
                           <input 
                             type="file" 
@@ -453,7 +453,7 @@ export default function Inventory() {
                             multiple
                             onChange={(e) => {
                               const files = Array.from(e.target.files || []);
-                              const remaining = 5 - (existingUrls.length + selectedFiles.length);
+                              const remaining = 15 - (existingUrls.length + selectedFiles.length);
                               setSelectedFiles(prev => [...prev, ...files.slice(0, remaining)]);
                             }}
                             className="hidden" 
